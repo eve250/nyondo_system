@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventory{% endblock %}
+
+{% block content %}
+
+<div class="grid grid-cols-3 gap-6">
+
+    <!-- 🔹 LEFT: FORM -->
+    <div class="col-span-1 bg-zinc-900 p-5 rounded-3xl">
+
+        <h2 class="text-lg font-semibold mb-4">Add Product</h2>
+
+        <form method="POST" class="space-y-3">
+            {% csrf_token %}
+
+            <input type="text" name="name" placeholder="Product Name"
+                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <input type="text" name="size" placeholder="Size" class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <input type="text" name="colour" placeholder="Colour"
+                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <input type="number" name="quantity" placeholder="Quantity"
+                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <input type="text" name="price" placeholder="Unit Price"
+                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <input type="text" name="type" placeholder="Type" class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <input type="text" name="category" placeholder="Category"
+                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <button class="w-full bg-emerald-500 hover:bg-emerald-600 p-2 rounded-xl font-semibold">
+                Add Product
+            </button>
+
+        </form>
+    </div>
+
+
+    <!-- 🔹 RIGHT: TABLE -->
+    <div class="col-span-2 bg-zinc-900 p-4 rounded-3xl">
+
+        <h2 class="text-lg font-semibold mb-4">Stock</h2>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+
+                <thead class="bg-zinc-800 text-zinc-300">
+                    <tr>
+                        <th class="p-3 text-left">Product Name</th>
+                        <th class="p-3 text-left">Size</th>
+                        <th class="p-3 text-left">Colour</th>
+                        <th class="p-3 text-left">Quantity</th>
+                        <th class="p-3 text-left">Unit Price</th>
+                        <th class="p-3 text-left">Type</th>
+                        <th class="p-3 text-left">Categories</th>
+                        <th class="p-3 text-left">Action</th>
+                        <th class="p-3 text-left">Last Updated</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr class="border-t border-zinc-800">
+                        <td class="p-3">Hammer</td>
+                        <td class="p-3">Medium</td>
+                        <td class="p-3">Black</td>
+                        <td class="p-3 text-emerald-400">150</td>
+                        <td class="p-3">USh 25,000</td>
+                        <td class="p-3">Tool</td>
+                        <td class="p-3">Hardware</td>
+
+                        <td class="p-3 flex gap-2">
+                            <a href="update/"
+                                class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 px-3 py-1.5 rounded-xl text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-pen"></i>
+                                Update
+                            </a>
+                            <a href="#" class="text-red-400"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+
+                        <td class="p-3">Today</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

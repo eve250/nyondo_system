@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}Customers{% endblock %}
+
+{% block content %}
+
+<h2 class="text-2xl font-semibold mb-6">Credit Customers</h2>
+
+<!-- 🔹 FORM -->
+<div class="bg-zinc-900 p-6 rounded-3xl mb-6">
+
+    <h3 class="text-lg font-semibold mb-4">Add Customer on Credit</h3>
+
+    <form method="POST" class="grid grid-cols-2 gap-4">
+        {% csrf_token %}
+
+        <input type="text" name="name" placeholder="Customer Name"
+            class="p-2 rounded-xl bg-zinc-800 outline-none col-span-2">
+
+        <input type="text" name="nin" placeholder="NIN Number"
+            class="p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="text" name="phone" placeholder="Phone Number"
+            class="p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="text" name="product_id" placeholder="Product ID"
+            class="p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="number" name="amount_paid" placeholder="Amount Paid"
+            class="p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="date" name="payment_date"
+            class="p-2 rounded-xl bg-zinc-800 outline-none col-span-2">
+
+        <button class="col-span-2 bg-emerald-500 hover:bg-emerald-600 p-2 rounded-xl font-semibold">
+            Add Customer
+        </button>
+
+    </form>
+</div>
+
+
+<!-- 🔹 TABLE -->
+<div class="bg-zinc-900 p-4 rounded-3xl">
+
+    <h3 class="text-lg font-semibold mb-4">Customers on Credit Scheme</h3>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+
+            <thead class="bg-zinc-800 text-zinc-300">
+                <tr>
+                    <th class="p-3 text-left">Name</th>
+                    <th class="p-3 text-left">NIN</th>
+                    <th class="p-3 text-left">Phone</th>
+                    <th class="p-3 text-left">Product ID</th>
+                    <th class="p-3 text-left">Amount Paid</th>
+                    <th class="p-3 text-left">Payment Date</th>
+                    <th class="p-3 text-left">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <!-- SAMPLE ROW -->
+                <tr class="border-t border-zinc-800 hover:bg-zinc-800/50">
+                    <td class="p-3">John Doe</td>
+                    <td class="p-3">CM12345678ABCD</td>
+                    <td class="p-3">0700123456</td>
+                    <td class="p-3">P001</td>
+                    <td class="p-3 text-emerald-400">USh 50,000</td>
+                    <td class="p-3">2026-05-06</td>
+
+                    <td class="p-3 flex gap-2">
+
+                        <!-- EDIT -->
+                        <a href="/editscheme/" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 px-3 py-1.5 rounded-xl text-xs flex items-center gap-1">
+                            <i class="fa-solid fa-pen"></i> Edit
+                        </a>
+
+                        <!-- DELETE -->
+                        <a href="#" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-3 py-1.5 rounded-xl text-xs flex items-center gap-1">
+                            <i class="fa-solid fa-trash"></i> Delete
+                        </a>
+
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+<!-- 🔹 UPDATE MODAL -->
+<div id="editModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center">
+
+    <div class="bg-zinc-900 p-6 rounded-3xl w-full max-w-lg">
+
+        <h3 class="text-lg font-semibold mb-4">Update Customer</h3>
+
+        <form method="POST" class="space-y-3">
+            {% csrf_token %}
+
+            <input type="text" id="edit_name" name="name"
+                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <input type="text" id="edit_nin" name="nin"
+                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <input type="text" id="edit_phone" name="phone"
+                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <input type="text" id="edit_product" name="product_id"
+                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <input type="number" id="edit_amount" name="amount_paid"
+                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <input type="date" id="edit_date" name="payment_date"
+                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+            <div class="flex gap-2">
+                <button class="bg-emerald-500 px-4 py-2 rounded-xl w-full">Update</button>
+
+                <button type="button" onclick="closeModal()"
+                    class="bg-zinc-700 px-4 py-2 rounded-xl w-full">
+                    Cancel
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

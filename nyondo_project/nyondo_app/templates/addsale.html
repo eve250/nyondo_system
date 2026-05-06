@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Sale{% endblock %}
+
+{% block content %}
+
+<div class="max-w-3xl mx-auto bg-zinc-900 p-6 rounded-3xl">
+
+    <h2 class="text-xl font-semibold mb-4">New Sale</h2>
+
+    <form class="grid grid-cols-2 gap-4">
+
+        <input type="text" placeholder="Customer Name" class="p-2 rounded-xl bg-zinc-800 outline-none col-span-2">
+
+        <input type="text" placeholder="Product ID" class="p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="number" placeholder="Quantity" class="p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="number" placeholder="Unit Price" class="p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="number" placeholder="Total Amount" class="p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="date" class="p-2 rounded-xl bg-zinc-800 outline-none col-span-2">
+
+        <div>
+            <a href="/viewsale/" class="bg-emerald-500 hover:bg-emerald-600 px-4 py-2 rounded-xl text-white text-sm">
+                save Sale
+            </a>
+
+        </div>
+    </form>
+
+    <!-- RECEIPT BUTTON -->
+    <div class="mt-4 text-right">
+        <a href="/reciept/" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-xl text-sm">
+            Generate Receipt
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

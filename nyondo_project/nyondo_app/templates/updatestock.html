@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Product{% endblock %}
+
+{% block content %}
+
+<div class="max-w-2xl mx-auto bg-zinc-900 p-6 rounded-3xl">
+
+    <h2 class="text-xl font-semibold mb-4">Update Product</h2>
+
+    <form method="POST" class="space-y-3">
+        {% csrf_token %}
+        
+        <input type="text" name="name" placeholder="Product Name" value="{{name}}"
+            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="text" name="size" placeholder="Size" class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="text" name="colour" placeholder="colour"
+            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="number" name="quantity" placeholder="quantity" required
+            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="text" name="unit cost" placeholder="cost" required
+            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="text" name="type" value="{{ product.type }}" placeholder="type"
+            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="text" name="category" value="{{ product.category }}" placeholder="category"
+            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <button class="w-full bg-emerald-500 hover:bg-emerald-600 p-2 rounded-xl font-semibold">
+            Update Product
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

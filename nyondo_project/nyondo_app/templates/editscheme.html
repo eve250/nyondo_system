@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Customer{% endblock %}
+
+{% block content %}
+
+<div class="max-w-2xl mx-auto bg-zinc-900 p-6 rounded-3xl">
+
+    <h2 class="text-xl font-semibold mb-4">Edit Customer</h2>
+
+    <form class="space-y-4">
+
+        <input type="text" placeholder="Customer Name"
+            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="text" placeholder="NIN Number"
+            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="text" placeholder="Phone Number"
+            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="text" placeholder="Product ID"
+            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="number" placeholder="Amount Paid"
+            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="date"
+            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <div class="flex gap-3">
+            <button class="bg-emerald-500 hover:bg-emerald-600 px-4 py-2 rounded-xl w-full">
+                Update Customer
+            </button>
+
+            <a href="#" class="bg-zinc-700 px-4 py-2 rounded-xl w-full text-center">
+                Cancel
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
