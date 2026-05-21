@@ -1,136 +1,176 @@
 {% extends 'base.html' %}
 
-{% block title %}Customers{% endblock %}
+{% block title %}Credit Scheme{% endblock %}
 
 {% block content %}
 
-<h2 class="text-2xl font-semibold mb-6">Credit Customers</h2>
+<div class="bg-zinc-900 p-5 rounded-3xl">
 
-<!-- 🔹 FORM -->
-<div class="bg-zinc-900 p-6 rounded-3xl mb-6">
+    <h2 class="text-2xl font-bold mb-6">
+        Credit Scheme
+    </h2>
 
-    <h3 class="text-lg font-semibold mb-4">Add Customer on Credit</h3>
+    <!-- FORM -->
+    <form method="POST"
+          class="grid grid-cols-3 gap-4 mb-8">
 
-    <form method="POST" class="grid grid-cols-2 gap-4">
         {% csrf_token %}
 
-        <input type="text" name="name" placeholder="Customer Name"
-            class="p-2 rounded-xl bg-zinc-800 outline-none col-span-2">
+        <input type="text"
+               name="customer_name"
+               placeholder="Customer Name"
+               class="p-3 rounded-xl bg-zinc-800 outline-none">
 
-        <input type="text" name="nin" placeholder="NIN Number"
-            class="p-2 rounded-xl bg-zinc-800 outline-none">
 
-        <input type="text" name="phone" placeholder="Phone Number"
-            class="p-2 rounded-xl bg-zinc-800 outline-none">
+        <input type="email"
+               name="email"
+               placeholder="Email"
+               class="p-3 rounded-xl bg-zinc-800 outline-none">
 
-        <input type="text" name="product_id" placeholder="Product ID"
-            class="p-2 rounded-xl bg-zinc-800 outline-none">
 
-        <input type="number" name="amount_paid" placeholder="Amount Paid"
-            class="p-2 rounded-xl bg-zinc-800 outline-none">
+        <input type="text"
+               name="nin_number"
+               placeholder="NIN Number"
+               class="p-3 rounded-xl bg-zinc-800 outline-none">
 
-        <input type="date" name="payment_date"
-            class="p-2 rounded-xl bg-zinc-800 outline-none col-span-2">
 
-        <button class="col-span-2 bg-emerald-500 hover:bg-emerald-600 p-2 rounded-xl font-semibold">
-            Add Customer
+        <input type="text"
+               name="contact"
+               placeholder="Contact"
+               class="p-3 rounded-xl bg-zinc-800 outline-none">
+
+
+        <input type="text"
+               name="address"
+               placeholder="Address"
+               class="p-3 rounded-xl bg-zinc-800 outline-none">
+
+
+        <!-- PRODUCT -->
+        <select name="product_name"
+                class="p-3 rounded-xl bg-zinc-800 outline-none">
+
+            <option value="">Select Product</option>
+
+            {% for product in products %}
+                <option value="{{ product.id }}">
+                    {{ product.product_name }}
+                </option>
+            {% endfor %}
+
+        </select>
+
+
+        <!-- CATEGORY -->
+        <select name="categories_name"
+                class="p-3 rounded-xl bg-zinc-800 outline-none">
+
+            <option value="">Select Category</option>
+
+            {% for category in categories %}
+                <option value="{{ category.id }}">
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+
+        </select>
+
+
+        <input type="number"
+               name="total_amount"
+               placeholder="Total Amount"
+               class="p-3 rounded-xl bg-zinc-800 outline-none">
+
+
+        <input type="number"
+               name="amount_paid"
+               placeholder="Amount Paid"
+               class="p-3 rounded-xl bg-zinc-800 outline-none">
+
+
+        <button class="bg-emerald-500 hover:bg-emerald-600 p-3 rounded-xl font-semibold">
+            Save Customer
         </button>
 
     </form>
-</div>
 
 
-<!-- 🔹 TABLE -->
-<div class="bg-zinc-900 p-4 rounded-3xl">
 
-    <h3 class="text-lg font-semibold mb-4">Customers on Credit Scheme</h3>
-
+    <!-- TABLE -->
     <div class="overflow-x-auto">
+
         <table class="w-full text-sm">
 
             <thead class="bg-zinc-800 text-zinc-300">
+
                 <tr>
-                    <th class="p-3 text-left">Name</th>
+                    <th class="p-3 text-left">Customer</th>
+                    <th class="p-3 text-left">Email</th>
                     <th class="p-3 text-left">NIN</th>
-                    <th class="p-3 text-left">Phone</th>
-                    <th class="p-3 text-left">Product ID</th>
-                    <th class="p-3 text-left">Amount Paid</th>
-                    <th class="p-3 text-left">Payment Date</th>
-                    <th class="p-3 text-left">Action</th>
+                    <th class="p-3 text-left">Contact</th>
+                    <th class="p-3 text-left">Address</th>
+                    <th class="p-3 text-left">Product</th>
+                    <th class="p-3 text-left">Category</th>
+                    <th class="p-3 text-left">Total</th>
+                    <th class="p-3 text-left">Paid</th>
+                    <th class="p-3 text-left">Balance</th>
                 </tr>
+
             </thead>
 
             <tbody>
 
-                <!-- SAMPLE ROW -->
-                <tr class="border-t border-zinc-800 hover:bg-zinc-800/50">
-                    <td class="p-3">John Doe</td>
-                    <td class="p-3">CM12345678ABCD</td>
-                    <td class="p-3">0700123456</td>
-                    <td class="p-3">P001</td>
-                    <td class="p-3 text-emerald-400">USh 50,000</td>
-                    <td class="p-3">2026-05-06</td>
+                {% for customer in customers %}
 
-                    <td class="p-3 flex gap-2">
+                <tr class="border-b border-zinc-800">
 
-                        <!-- EDIT -->
-                        <a href="/editscheme/" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 px-3 py-1.5 rounded-xl text-xs flex items-center gap-1">
-                            <i class="fa-solid fa-pen"></i> Edit
-                        </a>
-
-                        <!-- DELETE -->
-                        <a href="#" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-3 py-1.5 rounded-xl text-xs flex items-center gap-1">
-                            <i class="fa-solid fa-trash"></i> Delete
-                        </a>
-
+                    <td class="p-3">
+                        {{ customer.customer_name }}
                     </td>
+
+                    <td class="p-3">
+                        {{ customer.email }}
+                    </td>
+
+                    <td class="p-3">
+                        {{ customer.nin_number }}
+                    </td>
+
+                    <td class="p-3">
+                        {{ customer.contact }}
+                    </td>
+
+                    <td class="p-3">
+                        {{ customer.address }}
+                    </td>
+
+                    <td class="p-3">
+                        {{ customer.product }}
+                    </td>
+
+                    <td class="p-3">
+                        {{ customer.category }}
+                    </td>
+
+                    <td class="p-3">
+                        UGX {{ customer.total_amount }}
+                    </td>
+
+                    <td class="p-3">
+                        UGX {{ customer.amount_paid }}
+                    </td>
+
+                    <td class="p-3 text-red-400">
+                        UGX {{ customer.balance }}
+                    </td>
+
                 </tr>
+
+                {% endfor %}
 
             </tbody>
 
         </table>
-    </div>
-
-</div>
-
-<!-- 🔹 UPDATE MODAL -->
-<div id="editModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center">
-
-    <div class="bg-zinc-900 p-6 rounded-3xl w-full max-w-lg">
-
-        <h3 class="text-lg font-semibold mb-4">Update Customer</h3>
-
-        <form method="POST" class="space-y-3">
-            {% csrf_token %}
-
-            <input type="text" id="edit_name" name="name"
-                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
-
-            <input type="text" id="edit_nin" name="nin"
-                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
-
-            <input type="text" id="edit_phone" name="phone"
-                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
-
-            <input type="text" id="edit_product" name="product_id"
-                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
-
-            <input type="number" id="edit_amount" name="amount_paid"
-                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
-
-            <input type="date" id="edit_date" name="payment_date"
-                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
-
-            <div class="flex gap-2">
-                <button class="bg-emerald-500 px-4 py-2 rounded-xl w-full">Update</button>
-
-                <button type="button" onclick="closeModal()"
-                    class="bg-zinc-700 px-4 py-2 rounded-xl w-full">
-                    Cancel
-                </button>
-            </div>
-
-        </form>
 
     </div>
 

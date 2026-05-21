@@ -38,15 +38,31 @@ class Sales (models.Model):
 
 class Stock (models.Model):
   product_name= models.ForeignKey(Products , max_length=50,on_delete=models.CASCADE)
-  quantity = models.IntegerField(null=False)
+  quantity = models.IntegerField(null=False,default=0)
   categories = models.ForeignKey(Categories ,on_delete=models.CASCADE)
   supplier = models.CharField(max_length=50,null=False)
   payment_status = models.CharField(null=False)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now_add=True)
   def __str__(self):
-    return self.quantity
+     return str(self.quantity)
 
-
+class CreditScheme(models.Model):
+    customer_name = models.CharField(max_length=100)
+    product = models.ForeignKey(Products,on_delete=models.CASCADE)
+    category = models.ForeignKey( Categories, on_delete=models.CASCADE)
+    amount_paid = models.IntegerField()
+    total_amount = models.IntegerField()
+    balance = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    email = models.EmailField()
+    nin_number = models.CharField(max_length=20)
+    contact = models.CharField(max_length=20)
+    address = models.CharField(max_length=100)
+    def save(self, *args, **kwargs):
+        self.balance = self.total_amount - self.amount_paid
+        super().save(*args, **kwargs)
+    def __str__(self):
+        return self.customer_name
 
 

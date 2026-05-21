@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Stock,Categories,Products,Sales
+from .models import Stock,Categories,Products,Sales,CreditScheme
 import random
 # Create your views here.
 # LOGIN
@@ -13,42 +13,36 @@ def dashboard(request):
 
 def viewstock(request):
 
-    # -------------------------
-    # ADD STOCK (FORM SUBMIT)
-    # -------------------------
+    products = Products.objects.all()
+    categories = Categories.objects.all()
+
     if request.method == "POST":
 
-        product_id = request.POST.get("product")
-        category_id = request.POST.get("category")
-        quantity = request.POST.get("quantity")
-        supplier = request.POST.get("supplier")
-        payment_status = request.POST.get("payment_status")
+        product_id = request.POST.get("product_name")
+        quantity = int(request.POST.get("quantity"))
 
-        # fetch real objects (IMPORTANT)
         product = Products.objects.get(id=product_id)
-        category = Categories.objects.get(id=category_id)
+
+        # increase product quantity
+        product.quantity += quantity
+        product.save()
 
         Stock.objects.create(
-            product=product,
-            categories=category,
+            product_name=product,
+            categories=product.categories,
             quantity=quantity,
-            supplier=supplier,
-            payment_status=payment_status
+            supplier=request.POST.get("supplier"),
+            payment_status=request.POST.get("payment_status")
         )
 
         return redirect("viewstock")
 
-    # -------------------------
-    # VIEW STOCK (TABLE)
-    # -------------------------
     stocks = Stock.objects.all()
-    products = Products.objects.all()
-    categories = Categories.objects.all()
 
     return render(request, "viewstock.html", {
-        "stocks": stocks,
-        "products": products,
-        "categories": categories
+        'stocks': stocks,
+        'products': products,
+        'categories': categories
     })
 
 def categories(request):
@@ -67,7 +61,7 @@ def categories(request):
 
         )
 
-        return redirect('')
+        return redirect('viewstock')
 
     # VIEW CATEGORIES
     categories = Categories.objects.all()
@@ -131,19 +125,13 @@ def updatestock(request, pk):
    
 
 
-# CREDIT SCHEME
-def creditscheme(request):
-
-    return render(request, 'creditscheme.html', )
-
-
 # EDIT CREDIT CUSTOMER
 def editscheme(request):
     return render(request, 'editscheme.html', )
 
 # ADD SALE
 
-import random
+
 
 def addsale(request):
 
@@ -187,37 +175,21 @@ def addsale(request):
         for i in range(len(product_ids)):
 
             if product_ids[i] and quantities[i]:
-
                 product = Products.objects.get(id=product_ids[i])
-
                 category = Categories.objects.get(id=category_ids[i])
-
                 quantity = int(quantities[i])
-
                 unit_price = product.unit_price
-
                 total_amount = quantity * unit_price
-
                 Sales.objects.create(
-
                     customer=customer,
-
                     product_name=product,
-
                     categories=category,
-
                     quantity=quantity,
-
                     unit_price=unit_price,
-
                     total_amount=total_amount,
-
                     amount_paid=amount_paid,
-
                     balance=balance,
-
                     receipt=f"Receipt {receipt_number}",
-
                     receipt_number=receipt_number
                 )
 
@@ -241,6 +213,8 @@ def viewsales(request):
         'sales': sales
     })
 
+
+
 # RECEIPT
 def receipt(request, receipt_number):
 
@@ -256,7 +230,51 @@ def receipt(request, receipt_number):
         'total': total
     })
    
-    
+def creditscheme(request):
+
+    products = Products.objects.all()
+    categories = Categories.objects.all()
+
+    if request.method == "POST":
+
+        customer_name = request.POST.get("customer_name")
+        email = request.POST.get("email")
+        nin_number = request.POST.get("nin_number")
+        contact = request.POST.get("contact")
+        address = request.POST.get("address")
+
+        product_id = request.POST.get("product_name")
+        category_id = request.POST.get("categories_name")
+
+        amount_paid = int(request.POST.get("amount_paid"))
+        total_amount = int(request.POST.get("total_amount"))
+
+        product = Products.objects.get(id=product_id)
+        category = Categories.objects.get(id=category_id)
+
+        CreditScheme.objects.create(
+            customer_name=customer_name,
+            email=email,
+            nin_number=nin_number,
+            contact=contact,
+            address=address,
+            product=product,
+            category=category,
+            amount_paid=amount_paid,
+            total_amount=total_amount
+        )
+
+        return redirect("creditscheme")
+
+    customers = CreditScheme.objects.all().order_by("-id")
+
+    context = {
+        "customers": customers,
+        "products": products,
+        "categories": categories
+    }
+
+    return render(request, "creditscheme.html", context)
 
 
 
