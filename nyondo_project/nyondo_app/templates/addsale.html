@@ -1,42 +1,147 @@
 {% extends 'base.html' %}
 
-{% block title %}Add Sale{% endblock %}
-
 {% block content %}
 
-<div class="max-w-3xl mx-auto bg-zinc-900 p-6 rounded-3xl">
+<div class="bg-zinc-900 p-6 rounded-3xl">
 
-    <h2 class="text-xl font-semibold mb-4">New Sale</h2>
+    <h1 class="text-2xl font-bold mb-6">
+        Add Sale
+    </h1>
 
-    <form class="grid grid-cols-2 gap-4">
+    <form method="POST">
 
-        <input type="text" placeholder="Customer Name" class="p-2 rounded-xl bg-zinc-800 outline-none col-span-2">
+        {% csrf_token %}
 
-        <input type="text" placeholder="Product ID" class="p-2 rounded-xl bg-zinc-800 outline-none">
+        <div class="grid grid-cols-1 gap-4">
 
-        <input type="number" placeholder="Quantity" class="p-2 rounded-xl bg-zinc-800 outline-none">
+            <input type="text"
+                   name="customer"
+                   placeholder="Customer Name"
+                   class="w-full p-3 rounded-2xl bg-zinc-800 outline-none">
 
-        <input type="number" placeholder="Unit Price" class="p-2 rounded-xl bg-zinc-800 outline-none">
-
-        <input type="number" placeholder="Total Amount" class="p-2 rounded-xl bg-zinc-800 outline-none">
-
-        <input type="date" class="p-2 rounded-xl bg-zinc-800 outline-none col-span-2">
-
-        <div>
-            <a href="/viewsale/" class="bg-emerald-500 hover:bg-emerald-600 px-4 py-2 rounded-xl text-white text-sm">
-                save Sale
-            </a>
+            <input type="number"
+                   name="amount_paid"
+                   placeholder="Amount Paid"
+                   class="w-full p-3 rounded-2xl bg-zinc-800 outline-none">
 
         </div>
+
+        <!-- PRODUCTS -->
+
+        <div id="sales-container" class="mt-6 space-y-4">
+
+            <div class="grid grid-cols-3 gap-3">
+
+                <select name="product_name"
+                        class="p-3 rounded-2xl bg-zinc-800 outline-none">
+
+                    <option value="">Select Product</option>
+
+                    {% for product in products %}
+
+                    <option value="{{ product.id }}">
+                        {{ product.product_name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+                <select name="categories"
+                        class="p-3 rounded-2xl bg-zinc-800 outline-none">
+
+                    <option value="">Select Category</option>
+
+                    {% for category in categories %}
+
+                    <option value="{{ category.id }}">
+                        {{ category.name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+                <input type="number"
+                       name="quantity"
+                       placeholder="Quantity"
+                       class="p-3 rounded-2xl bg-zinc-800 outline-none">
+
+            </div>
+
+        </div>
+
+        <button type="button"
+                onclick="addRow()"
+                class="mt-4 px-5 py-3 bg-zinc-700 rounded-2xl">
+
+            Add Another Product
+
+        </button>
+
+        <button type="submit"
+                class="mt-4 px-5 py-3 bg-green-600 rounded-2xl">
+
+            Complete Sale
+
+        </button>
+
     </form>
 
-    <!-- RECEIPT BUTTON -->
-    <div class="mt-4 text-right">
-        <a href="/reciept/" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-xl text-sm">
-            Generate Receipt
-        </a>
+</div>
+
+<script>
+
+function addRow() {
+
+    const container = document.getElementById('sales-container')
+
+    const row = `
+    
+    <div class="grid grid-cols-3 gap-3">
+
+        <select name="product_name"
+                class="p-3 rounded-2xl bg-zinc-800 outline-none">
+
+            <option value="">Select Product</option>
+
+            {% for product in products %}
+
+            <option value="{{ product.id }}">
+                {{ product.product_name }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <select name="categories"
+                class="p-3 rounded-2xl bg-zinc-800 outline-none">
+
+            <option value="">Select Category</option>
+
+            {% for category in categories %}
+
+            <option value="{{ category.id }}">
+                {{ category.name }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <input type="number"
+               name="quantity"
+               placeholder="Quantity"
+               class="p-3 rounded-2xl bg-zinc-800 outline-none">
+
     </div>
 
-</div>
+    `
+
+    container.insertAdjacentHTML('beforeend', row)
+}
+
+</script>
 
 {% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="flex items-center justify-center min-h-[85vh]">
+
+    <!-- LOGIN CARD -->
+    <div class="w-full max-w-5xl bg-zinc-900 rounded-[35px] overflow-hidden shadow-2xl grid grid-cols-2">
+
+        <!-- LEFT SIDE -->
+        <div class="bg-gradient-to-br from-emerald-500 to-teal-500 p-10 flex flex-col justify-between">
+
+            <!-- LOGO -->
+            <div class="flex items-center gap-3">
+
+                <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-hammer text-3xl text-white"></i>
+                </div>
+
+                <div>
+                    <h1 class="text-3xl font-black tracking-tight">NYONDO</h1>
+                    <p class="text-white/80 text-sm">HARDWARE SYSTEM</p>
+                </div>
+
+            </div>
+
+            <!-- TEXT -->
+            <div>
+                <h2 class="text-4xl font-bold leading-tight mb-4">
+                    Welcome Back
+                </h2>
+
+                <p class="text-white/80 text-sm leading-7">
+                    Manage inventory, monitor sales, track customer credit,
+                    and generate receipts from one professional dashboard.
+                </p>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="text-sm text-white/70">
+                © 2026 Nyondo Hardware
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div class="p-10 flex items-center bg-zinc-950">
+
+            <div class="w-full">
+
+                <h2 class="text-3xl font-bold mb-2">Login</h2>
+
+                <p class="text-zinc-400 mb-8">
+                    Enter your account details
+                </p>
+
+                <!-- FORM -->
+                <form class="space-y-5">
+
+                    <!-- EMAIL -->
+                    <div>
+                        <label class="text-sm text-zinc-400 block mb-2">
+                            Email Address
+                        </label>
+
+                        <div class="bg-zinc-800 rounded-2xl px-4 py-3 flex items-center gap-3">
+
+                            <i class="fa-solid fa-envelope text-zinc-500"></i>
+
+                            <input type="email"
+                                   placeholder="Enter email"
+                                   class="bg-transparent outline-none w-full">
+                        </div>
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <div>
+                        <label class="text-sm text-zinc-400 block mb-2">
+                            Password
+                        </label>
+
+                        <div class="bg-zinc-800 rounded-2xl px-4 py-3 flex items-center gap-3">
+
+                            <i class="fa-solid fa-lock text-zinc-500"></i>
+
+                            <input type="password"
+                                   placeholder="Enter password"
+                                   class="bg-transparent outline-none w-full">
+                        </div>
+                    </div>
+
+
+                    <!-- OPTIONS -->
+                    <div class="flex items-center justify-between text-sm">
+
+                        <label class="flex items-center gap-2 text-zinc-400">
+                            <input type="checkbox">
+                            Remember me
+                        </label>
+
+                        <a href="#" class="text-emerald-400 hover:text-emerald-300">
+                            Forgot Password?
+                        </a>
+
+                    </div>
+
+
+                    <!-- BUTTON -->
+                    <button class="w-full bg-emerald-500 hover:bg-emerald-600 transition p-3 rounded-2xl font-semibold text-lg">
+                        Login
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

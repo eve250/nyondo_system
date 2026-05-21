@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="bg-zinc-900 p-6 rounded-3xl">
+
+    <h1 class="text-2xl font-bold mb-4">
+        Receipt
+    </h1>
+
+    <p>Receipt No: {{ sales.0.receipt }}</p>
+    <p>Customer: {{ sales.0.customer }}</p>
+
+    <div class="mt-6">
+
+        {% for sale in sales %}
+
+        <div class="border-b border-zinc-700 py-3">
+
+            <p>{{ sale.product_name }}</p>
+            <p>Qty: {{ sale.quantity }}</p>
+            <p>Total: {{ sale.total_amount }}</p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="mt-6">
+
+        <h2>Total Bill: {{ total }}</h2>
+        <h2>Amount Paid: {{ sales.0.amount_paid }}</h2>
+        <h2>Balance: {{ sales.0.balance }}</h2>
+
+    </div>
+    <div>
+        <button onclick="window.print()" class="bg-white text-black px-4 py-2 rounded-xl">
+            Print Receipt
+        </button>
+    </div>
+
+</div>
+
+{% endblock %}

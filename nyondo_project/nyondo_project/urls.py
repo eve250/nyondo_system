@@ -24,7 +24,11 @@ urlpatterns = [
     path('update/',views.updatestock, name='updatestock'),
     path('creditscheme/',views.creditscheme, name='creditscheme'),
     path('editscheme/',views.editscheme, name='editscheme'),
-    path('viewsale/',views.viewsale, name='viewsale'),
+    path('viewsale/',views.viewsales, name='viewsales'),
     path('addsale/',views.addsale, name='addsale'),
-    path('reciept/',views.reciept, name='reciept'),
+    path('receipt/<int:receipt_number>/', views.receipt, name='receipt'),
+    path('login/',views.login, name='login'),
+    path('categories/',views.categories, name='categories'),
+    path('products/',views.products, name='products'),
+     path('dashboard/',views.dashboard, name='dashboard'),
 ]

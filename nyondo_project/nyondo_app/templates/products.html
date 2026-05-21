@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+
+<h2 class="text-2xl font-semibold mb-6">Product Management</h2>
+
+<!-- FORM + TABLE SIDE BY SIDE -->
+<div class="grid grid-cols-3 gap-6">
+
+    <!-- ADD PRODUCT FORM -->
+    <div class="bg-zinc-900 p-6 rounded-3xl h-fit">
+
+        <h3 class="text-lg font-semibold mb-4">
+            Add Products
+        </h3>
+
+        <form method="POST" class="space-y-4">
+
+            {% csrf_token %}
+
+            <input type="text" name="product_name" placeholder="Product Name"
+                class="w-full p-3 rounded-2xl bg-zinc-800 outline-none">
+
+            <input type="text" name="size" placeholder="Size" class="w-full p-3 rounded-2xl bg-zinc-800 outline-none">
+
+            <select name="categories" class="form-select w-full p-3 rounded-2xl bg-zinc-800 outline-none">
+                <option value="">Select Category</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}">
+                    {{ category.name}} |
+
+                </option>
+                {% endfor %}
+            </select>
+            
+
+            <input type="number" name="unit_cost" placeholder="unit cost"
+                class="w-full p-3 rounded-2xl bg-zinc-800 outline-none">
+
+            <input type="number" name="unit_price" placeholder="unit Price"
+                class="w-full p-3 rounded-2xl bg-zinc-800 outline-none">
+
+            <input type="number" name="quantity" placeholder="Quantity"
+                class="w-full p-3 rounded-2xl bg-zinc-800 outline-none">
+
+            <button class="w-full bg-emerald-500 hover:bg-emerald-600 p-3 rounded-2xl font-semibold">
+                Add Product
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- PRODUCT TABLE -->
+    <div class="col-span-2 bg-zinc-900 p-4 rounded-3xl overflow-hidden">
+
+        <h3 class="text-lg font-semibold mb-4">
+            Available Product
+        </h3>
+
+        <table class="w-full">
+
+            <thead class="bg-zinc-800">
+
+                <tr>
+                    <th class="p-4 text-left">Product Name</th>
+                    <th class="p-4 text-left">Size</th>
+                    <th class="p-4 text-left">Category</th>
+                    <th class="p-4 text-left">Unit cost</th>
+                    <th class="p-4 text-left">Unit price</th>
+                    <th class="p-4 text-left">quantity</th>
+                    <th class="p-4 text-left">Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for product in products %}
+
+                <tr class="border-t border-zinc-800 hover:bg-zinc-800/40">
+
+                    <td class="p-4">
+                        {{ product.product_name }}
+                    </td>
+                    <td class="p-4">
+                        {{ product.size }}
+                    </td>
+
+                     <td class="p-4">
+                        {{product.categories}}
+                    </td>
+
+                    <td class="p-4">
+                        {{ product.unit_cost }}
+                    </td>
+
+                   
+                    <td class="p-4">
+                        {{ product.unit_price }}
+                    </td>
+
+                    <td class="p-4">
+                        {{product.quantity}}
+
+                    </td>
+
+                    <td class="p-4 flex gap-2">
+
+                        <a href="#"
+                            class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 px-3 py-1 rounded-xl text-sm">
+                            Edit
+                        </a>
+
+                        <a href="#" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-3 py-1 rounded-xl text-sm">
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,104 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+
+<h2 class="text-2xl font-semibold mb-6">Category Management</h2>
+
+<!-- FORM + TABLE -->
+<div class="grid grid-cols-3 gap-6">
+
+    <!-- CATEGORY FORM -->
+    <div class="bg-zinc-900 rounded-3xl p-8 shadow-lg w-full max-w-md">
+
+        <h2 class="text-3xl font-bold text-white mb-6">
+            Add Categories
+        </h2>
+
+        <form method="POST" class="space-y-5">
+            {% csrf_token %}
+
+            <!-- Category Name -->
+            <div>
+                <label class="block text-sm text-gray-400 mb-2">
+                    Category Name
+                </label>
+
+                <input type="text" name="categories_name" placeholder="Enter Category name" required
+                    class="w-full bg-zinc-800 border border-zinc-700 text-white px-4 py-3 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition">
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label class="block text-sm text-gray-400 mb-2">
+                    Description
+                </label>
+
+                <textarea name="description" rows="4" placeholder="Enter category description" required
+                    class="w-full bg-zinc-800 border border-zinc-700 text-white px-4 py-3 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition resize-none"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-2xl transition duration-300 shadow-md">
+                Add Category
+            </button>
+        </form>
+
+    </div>
+
+
+    <!-- Category TABLE -->
+    <div class="col-span-2 bg-zinc-900 p-4 rounded-3xl overflow-auto">
+
+        <h3 class="text-lg font-semibold mb-4">
+            Available Categories
+        </h3>
+
+
+        <table class="w-full text-left">
+            <thead class="bg-zinc-800">
+                <tr>
+                    <th class="p-4">Name</th>
+                    <th class="p-4">Description</th>
+                    <th class="p-4">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for category in categories %}
+                <tr class="border-t border-zinc-800 hover:bg-zinc-800/40">
+                    <td class="p-4">{{ category.name }}</td>
+                    
+                    <td class="p-4 text-emerald-400">{{ category.description }}</td>
+
+
+                    <td class="p-4 flex gap-2">
+                        <a href="#"
+                            class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 px-3 py-1 rounded-xl">
+                            Edit
+                        </a>
+
+                        <a href="#" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-3 py-1 rounded-xl">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="p-4 text-center text-gray-400">
+                        No categories  added yet.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

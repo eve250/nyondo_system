@@ -10,27 +10,33 @@
 
     <form method="POST" class="space-y-3">
         {% csrf_token %}
-        
-        <input type="text" name="name" placeholder="Product Name" value="{{name}}"
+
+        <input type="text" name="product_name" placeholder="Product Name" value="{{stock.name}}"
             class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
 
-        <input type="text" name="size" placeholder="Size" class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+        <input type="text" name="size" placeholder="Size" value="{{stock.size}}" class=" w-full p-2 rounded-xl
+            bg-zinc-800 outline-none">
 
-        <input type="text" name="colour" placeholder="colour"
+        <input type="text" name="colour" placeholder="colour" value="{{stock.colour}}"
+            class=" w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="number" name="quantity" placeholder="quantity" value="{{stock.quantity}}"required
+            class= " w-full p-2 rounded-xl bg-zinc-800 outline-none">
+
+        <input type="text" name="unit_cost" placeholder="cost" required value="{{stock.unit_cost}}
+            class=" w-full p-2 rounded-xl bg-zinc-800 outline-none>
+
+        <input type="datetime" name="updated_at" value="{{ stock.categories }}" placeholder="00/00/0000"
             class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
 
-        <input type="number" name="quantity" placeholder="quantity" required
+        <input type="text" name="category" value="{{ stock.categories }}" placeholder="category"
             class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
 
-        <input type="text" name="unit cost" placeholder="cost" required
+        <input type="text" name="category" value="{{ Stock.Supplier }}" placeholder="supplier"
             class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
 
-        <input type="text" name="type" value="{{ product.type }}" placeholder="type"
+              <input type="text" name="category" value="{{ Stock.payment_status }}" placeholder="PAID/NOT PAID"
             class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
-
-        <input type="text" name="category" value="{{ product.category }}" placeholder="category"
-            class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
-
         <button class="w-full bg-emerald-500 hover:bg-emerald-600 p-2 rounded-xl font-semibold">
             Update Product
         </button>

@@ -9,32 +9,28 @@
     <!-- 🔹 LEFT: FORM -->
     <div class="col-span-1 bg-zinc-900 p-5 rounded-3xl">
 
-        <h2 class="text-lg font-semibold mb-4">Add Product</h2>
+        <h2 class="text-lg font-semibold mb-4">Add Stock</h2>
 
         <form method="POST" class="space-y-3">
             {% csrf_token %}
 
-            <input type="text" name="name" placeholder="Product Name"
-                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
-
-            <input type="text" name="size" placeholder="Size" class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
-
-            <input type="text" name="colour" placeholder="Colour"
+            <input type="text" name=" product_name" placeholder="Product "
                 class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
 
             <input type="number" name="quantity" placeholder="Quantity"
                 class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
 
-            <input type="text" name="price" placeholder="Unit Price"
+            <input type="text" name="categories" placeholder="Categories"
                 class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
 
-            <input type="text" name="type" placeholder="Type" class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
+            <input type="text" name="Supplier" placeholder="Supplier"
+                class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
 
-            <input type="text" name="category" placeholder="Category"
+            <input type="text" name="payment_status" placeholder="Payment status"
                 class="w-full p-2 rounded-xl bg-zinc-800 outline-none">
 
             <button class="w-full bg-emerald-500 hover:bg-emerald-600 p-2 rounded-xl font-semibold">
-                Add Product
+                Add Stock
             </button>
 
         </form>
@@ -51,13 +47,13 @@
 
                 <thead class="bg-zinc-800 text-zinc-300">
                     <tr>
-                        <th class="p-3 text-left">Product Name</th>
-                        <th class="p-3 text-left">Size</th>
-                        <th class="p-3 text-left">Colour</th>
+                        <th class="p-3 text-left">Product </th>
                         <th class="p-3 text-left">Quantity</th>
-                        <th class="p-3 text-left">Unit Price</th>
-                        <th class="p-3 text-left">Type</th>
                         <th class="p-3 text-left">Categories</th>
+                        <th class="p-3 text-left">Unit cost</th>
+                        <th class="p-3 text-left">Total Amount</th>
+                        <th class="p-3 text-left">Supplier</th>
+                        <th class="p-3 text-left">Payment Status</th>
                         <th class="p-3 text-left">Action</th>
                         <th class="p-3 text-left">Last Updated</th>
                     </tr>
@@ -65,14 +61,36 @@
 
                 <tbody>
 
-                    <tr class="border-t border-zinc-800">
-                        <td class="p-3">Hammer</td>
-                        <td class="p-3">Medium</td>
-                        <td class="p-3">Black</td>
-                        <td class="p-3 text-emerald-400">150</td>
-                        <td class="p-3">USh 25,000</td>
-                        <td class="p-3">Tool</td>
-                        <td class="p-3">Hardware</td>
+                    {% for stock in stocks %}
+
+                    <tr class="border-b border-zinc-800">
+
+                        <td class="p-3">
+                            {{ stock.product_name }}
+                        </td>
+
+                        <td class="p-3">
+                            {{ stock.quantity }}
+                        </td>
+
+                        <td class="p-3">
+                            {{ stock.categories }}
+                        </td>
+
+                        <td class="p-3">
+                            {{ stock.supplier }}
+                        </td>
+
+                        <td class="p-3">
+                            {{ stock.payment_status }}
+                        </td>
+
+                        <td class="p-3">
+                            {{ stock.updated_at }}
+                        </td>
+
+                        <td class="p-3 flex gap-2">
+
 
                         <td class="p-3 flex gap-2">
                             <a href="update/"
@@ -80,15 +98,31 @@
                                 <i class="fa-solid fa-pen"></i>
                                 Update
                             </a>
-                            <a href="#" class="text-red-400"><i class="fa-solid fa-trash"></i></a>
+
                         </td>
+
 
                         <td class="p-3">Today</td>
                     </tr>
 
-                </tbody>
+                    </a>
 
+                </tbody>
+                {% endfor %}
             </table>
+            <a href="/products/"
+                class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 px-4 py-2 rounded-xl text-sm">
+
+                Add Product
+
+            </a>
+
+            <a href="/categories/"
+                class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 px-4 py-2 rounded-xl text-sm">
+
+                Add Categories
+
+            </a>
         </div>
 
     </div>
