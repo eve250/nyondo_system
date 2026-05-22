@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Nyondo Hardware</title>
@@ -8,10 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <style>
-        body { font-family: system-ui, sans-serif; }
+        body {
+            font-family: system-ui, sans-serif;
+        }
 
         /* EXACT colors from your original */
-        .sidebar { background-color: #0f172a; }
+        .sidebar {
+            background-color: #0f172a;
+        }
 
         .topbar {
             background: linear-gradient(90deg, #10b981, #14b8a6);
@@ -26,98 +31,97 @@
 
 <body class="bg-zinc-950 text-zinc-200">
 
-<div class="flex h-screen overflow-hidden">
+    <div class="flex h-screen overflow-hidden">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar w-72 flex flex-col border-r border-zinc-800">
+        <!-- SIDEBAR -->
+        <aside class="sidebar w-72 flex flex-col border-r border-zinc-800">
 
-        <!-- LOGO -->
-        <div class="p-6 border-b border-zinc-800 flex items-center gap-3">
-            <div class="w-11 h-11 bg-emerald-500 rounded-2xl flex items-center justify-center">
-                <i class="fa-solid fa-hammer text-white text-2xl"></i>
-            </div>
-
-            <div>
-                <p class="font-bold text-xl tracking-tighter">NYONDO</p>
-                <p class="text-emerald-400 text-sm -mt-1">HARDWARE</p>
-            </div>
-        </div>
-
-        <!-- NAV -->
-        <nav class="flex-1 p-4 space-y-1">
-
-            <a href="dashboard/" class="nav-active flex items-center gap-3 px-5 py-3 rounded-2xl">
-                <i class="fa-solid fa-gauge-high"></i> Dashboard
-            </a>
-
-            <a href="login/" class="flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-white/10">
-                <i class="fa-solid fa-house"></i> Home
-            </a>
-
-            <a href="" class="flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-white/10">
-                <i class="fa-solid fa-boxes-stacked"></i> stock Management
-            </a>
-
-            <a href="/viewsales/" class="flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-white/10">
-                <i class="fa-solid fa-cart-shopping"></i> Sales Management
-            </a>
-
-             <a href="/creditscheme/" class="flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-white/10">
-                <i class="fa-solid fa-credit-card"></i> Credit Scheme
-            </a>
-
-             <a href="#" class="flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-white/10">
-                <i class="fa-solid fa-credit-card"></i> Transport Scheme
-            </a>
-
-        </nav>
-
-        <!-- LOGOUT -->
-        <div class="p-4 border-t border-zinc-800">
-            <a href="#" class="flex items-center gap-3 px-5 py-3 text-red-400 hover:bg-white/10 rounded-2xl">
-                <i class="fa-solid fa-right-from-bracket"></i> Logout
-            </a>
-        </div>
-
-    </aside>
-
-    <!-- MAIN -->
-    <div class="flex-1 flex flex-col">
-
-        <!-- HEADER -->
-        <header class="topbar h-14 flex items-center px-6 text-white">
-
-            <h1 class="font-semibold text-lg">
-                
-
-            <div class="ml-auto flex items-center gap-4">
-
-                <!-- SEARCH -->
-                <div class="bg-white/20 px-4 py-1.5 rounded-3xl flex items-center gap-2 text-sm">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search..." class="bg-transparent outline-none w-40">
+            <!-- LOGO -->
+            <div class="p-6 border-b border-zinc-800 flex items-center gap-3">
+                <div class="w-11 h-11 bg-emerald-500 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-hammer text-white text-2xl"></i>
                 </div>
 
-                <!-- NOTIFICATION -->
-                <i class="fa-solid fa-bell text-lg"></i>
-
+                <div>
+                    <p class="font-bold text-xl tracking-tighter">NYONDO</p>
+                    <p class="text-emerald-400 text-sm -mt-1">HARDWARE</p>
+                </div>
             </div>
-        </header>
 
-        <!-- CONTENT -->
-        
+            <!-- NAV -->
+            <nav class="flex-1 p-4 space-y-1">
+
+                <a href="dashboard/" class="nav-active flex items-center gap-3 px-5 py-3 rounded-2xl">
+                    <i class="fa-solid fa-gauge-high"></i> Dashboard
+                </a>
+
+                <a href="login/" class="flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-white/10">
+                    <i class="fa-solid fa-house"></i> Home
+                </a>
+
+                <a href="" class="flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-white/10">
+                    <i class="fa-solid fa-boxes-stacked"></i> stock Management
+                </a>
+
+                <a href="/viewsales/" class="flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-white/10">
+                    <i class="fa-solid fa-cart-shopping"></i> Sales Management
+                </a>
+
+                <a href="/creditscheme/" class="flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-white/10">
+                    <i class="fa-solid fa-credit-card"></i> Credit Scheme
+                </a>
+                
+                <a href="/register/" class="flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-white/10">
+                    <i class="fa-solid fa-credit-card"></i> Credit Scheme
+                </a>
+
+            </nav>
+
+            <!-- LOGOUT -->
+            <a href="{% url 'logout' %}" class="bg-red-500 px-4 py-2 rounded-xl text-white">
+                Logout
+            </a>
+
+        </aside>
+
+        <!-- MAIN -->
+        <div class="flex-1 flex flex-col">
+
+            <!-- HEADER -->
+            <header class="topbar h-14 flex items-center px-6 text-white">
+
+                <h1 class="font-semibold text-lg">
+
+
+                    <div class="ml-auto flex items-center gap-4">
+
+                        <!-- SEARCH -->
+                        <div class="bg-white/20 px-4 py-1.5 rounded-3xl flex items-center gap-2 text-sm">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" placeholder="Search..." class="bg-transparent outline-none w-40">
+                        </div>
+
+                        <!-- NOTIFICATION -->
+                        <i class="fa-solid fa-bell text-lg"></i>
+
+                    </div>
+            </header>
+
+            <!-- CONTENT -->
+
             {% block content %}
             {% endblock %}
-        
 
-        <!-- FOOTER -->
-        <footer class="text-center text-sm p-3 border-t border-zinc-800">
-            © 2026 Nyondo Hardware
-        </footer>
+
+            <!-- FOOTER -->
+            <footer class="text-center text-sm p-3 border-t border-zinc-800">
+                © 2026 Nyondo Hardware
+            </footer>
+
+        </div>
 
     </div>
 
-</div>
-
 </body>
+
 </html>

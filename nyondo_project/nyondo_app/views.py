@@ -1,17 +1,65 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Stock,Categories,Products,Sales,CreditScheme
+from django.contrib.auth import authenticate, login as auth_login, logout
+from .forms import CustomUserForm
+from django.contrib.auth.decorators import login_required
+from .models import CustomUser
+from django.db.models import Sum
 import random
-# Create your views here.
-# LOGIN
-def login(request):
-    return render(request, 'login.html')
 
+# Create your views here.
+
+@login_required
+
+
+@login_required
 def dashboard(request):
-    return render(request, 'dashboard.html')
+
+    if request.user.role not in [
+        "overall_manager",
+        "sales_manager",
+        "stock_manager"
+    ]:
+        return redirect("login")
+
+    # TOTAL PRODUCTS
+    total_products = Products.objects.count()
+
+    # TOTAL STOCK ENTRIES
+    total_stock = Stock.objects.count()
+
+    # TOTAL SALES
+    total_sales = Sales.objects.count()
+
+    # RECENT SALES
+    recent_sales = Sales.objects.all().order_by("-id")[:5]
+
+    # LOW STOCK PRODUCTS
+    low_stock_products = Products.objects.filter(quantity__lt=5)
+
+    # TOTAL REVENUE REPORT
+    total_revenue = Sales.objects.aggregate(
+        Sum("total_amount")
+    )["total_amount__sum"] or 0
+
+    context = {
+        "total_products": total_products,
+        "total_stock": total_stock,
+        "total_sales": total_sales,
+        "recent_sales": recent_sales,
+        "low_stock_products": low_stock_products,
+        "total_revenue": total_revenue,
+    }
+
+    return render(request, "dashboard.html", context)
 
 # VIEW STOCK + ADD PRODUCT
-
+@login_required
+@login_required
 def viewstock(request):
+
+    if request.user.role not in ["stock_manager", "overall_manager"]:
+        return redirect("login")
 
     products = Products.objects.all()
     categories = Categories.objects.all()
@@ -19,21 +67,35 @@ def viewstock(request):
     if request.method == "POST":
 
         product_id = request.POST.get("product_name")
-        quantity = int(request.POST.get("quantity"))
+        quantity = request.POST.get("quantity")
 
-        product = Products.objects.get(id=product_id)
+        supplier = request.POST.get("supplier")
+        payment_status = request.POST.get("payment_status")
 
-        # increase product quantity
-        product.quantity += quantity
-        product.save()
+        # DEBUG
+        print(product_id)
+        print(quantity)
+        print(supplier)
+        print(payment_status)
 
-        Stock.objects.create(
-            product_name=product,
-            categories=product.categories,
-            quantity=quantity,
-            supplier=request.POST.get("supplier"),
-            payment_status=request.POST.get("payment_status")
-        )
+        if product_id and quantity:
+
+            product = Products.objects.get(id=product_id)
+
+            quantity = int(quantity)
+
+            # increase product quantity
+            product.quantity += quantity
+            product.save()
+
+            # SAVE STOCK
+            Stock.objects.create(
+                product_name=product,
+                categories=product.categories,
+                quantity=quantity,
+                supplier=supplier,
+                payment_status=payment_status
+            )
 
         return redirect("viewstock")
 
@@ -45,7 +107,11 @@ def viewstock(request):
         'categories': categories
     })
 
+##CATEGORIES
+@login_required
 def categories(request):
+    if request.user.role not in ["stock_manager"  ,"overall_manager"]:
+        return redirect("login")
     if request.method == "POST":
 
         payload = request.POST
@@ -67,10 +133,53 @@ def categories(request):
     categories = Categories.objects.all()
 
     return render(request, 'categories.html',{"categories": categories})
+
+# EDIT category
+@login_required
+def edit_category(request, pk):
+
+    category = get_object_or_404(Categories, id=pk)
+
+    if request.method == "POST":
+
+        category.name = request.POST.get("name")
+        category.description = request.POST.get("description")
+
+        category.save()
+
+        return redirect("categories")
+
+    context = {
+        "item": category,
+        "type": "category"
+    }
+
+    return render(request, "edit.html", context)
+
+#DELETE CATEGORIES
+@login_required
+def delete_category(request, pk):
+
+    category = get_object_or_404(Categories, id=pk)
+
+    if request.method == "POST":
+        category.delete()
+        return redirect("categories")
+
+    context = {
+        "item": category,
+        "type": "category"
+    }
+
+    return render(request, "delete.html", context)
+
+
     
-
+##PRODUCTS
+@login_required
 def products(request):
-
+    if request.user.role not in ["stock_manager"  ,"overall_manager"]:
+        return redirect("login")
     if request.method == "POST":
 
         product_name = request.POST.get('product_name')
@@ -107,33 +216,55 @@ def products(request):
 
 
 # UPDATE PRODUCT
-def updatestock(request, pk):
-        # GET PRODUCT
+@login_required
+def edit_product(request, pk):
+
     product = get_object_or_404(Products, id=pk)
 
-    # UPDATE PRODUCT
     if request.method == "POST":
-        product.product_name = request.POST.get('name')
-        product.size = request.POST.get('size')
-        product.unit_cost = request.POST.get('unit_cost')
-        product.unit_price = request.POST.get('unit_price')
+
+        product.product_name = request.POST.get("product_name")
+        product.size = request.POST.get("size")
+        product.unit_cost = request.POST.get("unit_cost")
+        product.unit_price = request.POST.get("unit_price")
+        product.quantity = request.POST.get("quantity")
+
         product.save()
-        return redirect('viewstock')
-    return render(request, 'updateproduct.html', {
-        'product': product
-    })
+
+        return redirect("products")
+
+    context = {
+        "item": product,
+        "type": "product"
+    }
+
+    return render(request, "edit.html", context)
    
+##DELETE PRODUCT 
+@login_required
+def delete_product(request, pk):
 
+    product = get_object_or_404(Products, id=pk)
 
-# EDIT CREDIT CUSTOMER
-def editscheme(request):
-    return render(request, 'editscheme.html', )
+    if request.method == "POST":
+        product.delete()
+        return redirect("products")
+
+    context = {
+        "item": product,
+        "type": "product"
+    }
+
+    return render(request, "delete.html", context)
+
 
 # ADD SALE
 
-
-
+@login_required
 def addsale(request):
+    if request.user.role not in ["sales_manager" ,"cashier" ,"overall_manager"]:
+        return redirect("login")
+
 
     products = Products.objects.all()
     categories = Categories.objects.all()
@@ -204,7 +335,7 @@ def addsale(request):
 
 
 # VIEW SALES
-
+@login_required
 def viewsales(request):
 
     sales = Sales.objects.all().order_by('-id')
@@ -216,6 +347,7 @@ def viewsales(request):
 
 
 # RECEIPT
+@login_required
 def receipt(request, receipt_number):
 
     sales = Sales.objects.filter(receipt_number=receipt_number)
@@ -229,8 +361,11 @@ def receipt(request, receipt_number):
         'sales': sales,
         'total': total
     })
-   
+##CREDIT SCHEME
+@login_required
 def creditscheme(request):
+    if request.user.role not in ["customer_manager" ,"cashier" , "overall_manager"] :
+        return redirect("login")
 
     products = Products.objects.all()
     categories = Categories.objects.all()
@@ -276,6 +411,73 @@ def creditscheme(request):
 
     return render(request, "creditscheme.html", context)
 
+##LOGIN PAGE
 
+def login_view(request):
 
+    if request.method == "POST":
+
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(
+            request,
+            username=username,
+            password=password
+        )
+        print("username", username)
+        print("password", password)
+        print("user",user)
+        print(user.role)
+        if user is not None:
+
+            auth_login(request, user)
+
+            # REDIRECT BASED ON ROLE
+            if user.role == "overall_manager":
+                return redirect("dashboard")
+
+            elif user.role == "stock_manager":
+                return redirect("viewstock")
+
+            elif user.role == "sales_manager":
+                return redirect("viewsales")
+            
+            elif user.role == "cashier":
+                return redirect("addsale")
+
+            elif user.role == "customer_manager":
+                return redirect("creditscheme")
+
+    return render(request, "login.html")
+
+# REGISTER USER
+
+##REGISTER
+@login_required
+def register(request):
+    if request.user.role not in ["overall_manager"] :
+        return redirect("login")
+    form = CustomUserForm()
+
+    if request.method == "POST":
+
+        form = CustomUserForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+
+    context = {
+        "form": form
+    }
+
+    return render(request, "register.html", context)
+
+@login_required
+def logoutuser(request):
+
+    logout(request)
+
+    return redirect("login")
 

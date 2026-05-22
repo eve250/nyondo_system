@@ -32,129 +32,91 @@
 
 
 
-<!-- TOP SECTION -->
+<!-- TOP CARDS -->
 <div class="grid grid-cols-12 gap-6 mb-6">
 
-    <!-- BIG REVENUE CARD -->
-    <div class="col-span-5 bg-gradient-to-br from-emerald-500 to-teal-600 p-7 rounded-[32px] relative overflow-hidden">
+    <!-- STOCK -->
+    <div class="col-span-4 bg-zinc-900 p-6 rounded-[30px] border border-zinc-800">
 
-        <div class="absolute right-0 top-0 w-40 h-40 bg-white/10 rounded-full -mr-10 -mt-10"></div>
+        <div class="flex items-center justify-between mb-6">
 
-        <div class="relative z-10">
+            <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center">
 
-            <p class="text-white/70 text-sm mb-2">
-                Total Revenue
-            </p>
-
-            <h2 class="text-5xl font-black mb-3">
-                USh 12.4M
-            </h2>
-
-            <div class="flex items-center gap-2 text-sm">
-
-                <span class="bg-white/20 px-3 py-1 rounded-xl">
-                    +18%
-                </span>
-
-                <span class="text-white/80">
-                    Compared to last month
-                </span>
+                <i class="fa-solid fa-boxes-stacked text-2xl text-emerald-400"></i>
 
             </div>
 
+            <span class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-xl">
+                Stock
+            </span>
+
         </div>
+
+        <h2 class="text-4xl font-black">
+            {{ total_stock }}
+        </h2>
+
+        <p class="text-zinc-400 mt-2 text-sm">
+            Total Stock Entries
+        </p>
 
     </div>
 
 
 
-    <!-- SMALL STATS -->
-    <div class="col-span-7 grid grid-cols-3 gap-6">
+    <!-- PRODUCTS -->
+    <div class="col-span-4 bg-zinc-900 p-6 rounded-[30px] border border-zinc-800">
 
-        <!-- PRODUCTS -->
-        <div class="bg-zinc-900 p-5 rounded-[28px] border border-zinc-800">
+        <div class="flex items-center justify-between mb-6">
 
-            <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center">
 
-                <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center">
-
-                    <i class="fa-solid fa-boxes-stacked text-2xl text-emerald-400"></i>
-
-                </div>
-
-                <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded-lg">
-                    Active
-                </span>
+                <i class="fa-solid fa-box text-2xl text-blue-400"></i>
 
             </div>
 
-            <h2 class="text-3xl font-bold">
-                245
-            </h2>
-
-            <p class="text-zinc-400 text-sm mt-1">
+            <span class="text-xs bg-blue-500/10 text-blue-400 px-3 py-1 rounded-xl">
                 Products
-            </p>
+            </span>
 
         </div>
 
+        <h2 class="text-4xl font-black">
+            {{ total_products }}
+        </h2>
+
+        <p class="text-zinc-400 mt-2 text-sm">
+            Available Products
+        </p>
+
+    </div>
 
 
-        <!-- SALES -->
-        <div class="bg-zinc-900 p-5 rounded-[28px] border border-zinc-800">
 
-            <div class="flex items-center justify-between mb-6">
+    <!-- SALES -->
+    <div class="col-span-4 bg-zinc-900 p-6 rounded-[30px] border border-zinc-800">
 
-                <div class="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center">
+        <div class="flex items-center justify-between mb-6">
 
-                    <i class="fa-solid fa-cart-shopping text-2xl text-blue-400"></i>
+            <div class="w-14 h-14 rounded-2xl bg-orange-500/20 flex items-center justify-center">
 
-                </div>
-
-                <span class="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded-lg">
-                    Today
-                </span>
+                <i class="fa-solid fa-cart-shopping text-2xl text-orange-400"></i>
 
             </div>
 
-            <h2 class="text-3xl font-bold">
-                89
-            </h2>
-
-            <p class="text-zinc-400 text-sm mt-1">
+            <span class="text-xs bg-orange-500/10 text-orange-400 px-3 py-1 rounded-xl">
                 Sales
-            </p>
+            </span>
 
         </div>
 
+        <h2 class="text-4xl font-black">
+            {{ total_sales }}
+        </h2>
 
-
-        <!-- CREDIT -->
-        <div class="bg-zinc-900 p-5 rounded-[28px] border border-zinc-800">
-
-            <div class="flex items-center justify-between mb-6">
-
-                <div class="w-14 h-14 rounded-2xl bg-orange-500/20 flex items-center justify-center">
-
-                    <i class="fa-solid fa-credit-card text-2xl text-orange-400"></i>
-
-                </div>
-
-                <span class="text-xs bg-orange-500/10 text-orange-400 px-2 py-1 rounded-lg">
-                    Pending
-                </span>
-
-            </div>
-
-            <h2 class="text-3xl font-bold">
-                14
-            </h2>
-
-            <p class="text-zinc-400 text-sm mt-1">
-            
-            </p>
-
-        </div>
+        <p class="text-zinc-400 mt-2 text-sm">
+            Total Sales Made
+        </p>
 
     </div>
 
@@ -162,7 +124,7 @@
 
 
 
-<!-- LOWER GRID -->
+<!-- LOWER SECTION -->
 <div class="grid grid-cols-12 gap-6">
 
     <!-- RECENT SALES -->
@@ -183,7 +145,7 @@
 
             </div>
 
-            <a href="viewsale/"
+            <a href="{% url 'viewsales' %}"
                class="bg-emerald-500 hover:bg-emerald-600 px-4 py-2 rounded-xl text-sm">
                 View All
             </a>
@@ -208,7 +170,7 @@
 
                         <th class="p-4 text-left">Amount</th>
 
-                        <th class="p-4 text-left">Status</th>
+                        <th class="p-4 text-left">Receipt</th>
 
                     </tr>
 
@@ -216,51 +178,43 @@
 
                 <tbody>
 
+                    {% for sale in recent_sales %}
+
                     <tr class="border-t border-zinc-800 hover:bg-zinc-800/40">
 
-                        <td class="p-4">John Doe</td>
-
-                        <td class="p-4">Hammer</td>
-
-                        <td class="p-4">2</td>
-
-                        <td class="p-4 text-emerald-400">
-                            USh 50,000
+                        <td class="p-4">
+                            {{ sale.customer }}
                         </td>
 
                         <td class="p-4">
+                            {{ sale.product_name }}
+                        </td>
 
-                            <span class="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-xl text-xs">
-                                Paid
-                            </span>
+                        <td class="p-4">
+                            {{ sale.quantity }}
+                        </td>
 
+                        <td class="p-4 text-emerald-400">
+                            UGX {{ sale.total_amount }}
+                        </td>
+
+                        <td class="p-4">
+                            {{ sale.receipt_number }}
                         </td>
 
                     </tr>
 
+                    {% empty %}
 
+                    <tr>
 
-                    <tr class="border-t border-zinc-800 hover:bg-zinc-800/40">
-
-                        <td class="p-4"></td>
-
-                        <td class="p-4"></td>
-
-                        <td class="p-4"></td>
-
-                        <td class="p-4 text-emerald-400">
-                            USh 120,000
-                        </td>
-
-                        <td class="p-4">
-
-                            <span class="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-xl text-xs">
-                                Credit
-                            </span>
-
+                        <td colspan="5" class="p-6 text-center text-zinc-400">
+                            No sales available
                         </td>
 
                     </tr>
+
+                    {% endfor %}
 
                 </tbody>
 
@@ -275,71 +229,58 @@
     <!-- RIGHT SIDE -->
     <div class="col-span-4 space-y-6">
 
-        <!-- LOW STOCK -->
+        <!-- REPORTS -->
         <div class="bg-zinc-900 rounded-[32px] p-6 border border-zinc-800">
 
             <div class="flex items-center justify-between mb-5">
 
                 <h2 class="text-lg font-semibold">
-                    Low Stock
+                    Reports
                 </h2>
 
-                <i class="fa-solid fa-triangle-exclamation text-red-400"></i>
+                <i class="fa-solid fa-chart-line text-emerald-400"></i>
 
             </div>
 
-
             <div class="space-y-4">
 
-                <!-- ITEM -->
                 <div class="bg-zinc-800 p-4 rounded-2xl">
 
-                    <div class="flex items-center justify-between">
+                    <p class="text-sm text-zinc-400 mb-1">
+                        Total Products
+                    </p>
 
-                        <div>
-
-                            <h3 class="font-semibold">
-                                Cement
-                            </h3>
-
-                            <p class="text-sm text-zinc-400">
-                                4 Remaining
-                            </p>
-
-                        </div>
-
-                        <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-xl text-xs">
-                            Low
-                        </span>
-
-                    </div>
+                    <h3 class="text-2xl font-bold">
+                        {{ total_products }}
+                    </h3>
 
                 </div>
 
 
 
-                <!-- ITEM -->
                 <div class="bg-zinc-800 p-4 rounded-2xl">
 
-                    <div class="flex items-center justify-between">
+                    <p class="text-sm text-zinc-400 mb-1">
+                        Total Sales
+                    </p>
 
-                        <div>
+                    <h3 class="text-2xl font-bold">
+                        {{ total_sales }}
+                    </h3>
 
-                            <h3 class="font-semibold">
-                                
-                            </h3>
+                </div>
 
-                            <p class="text-sm text-zinc-400">
-                                
-                            </p>
 
-                        </div>
 
-                        <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-xl text-xs">
-                            Low
-                        </span>
+                <div class="bg-zinc-800 p-4 rounded-2xl">
 
-                    </div>
+                    <p class="text-sm text-zinc-400 mb-1">
+                        Stock Entries
+                    </p>
+
+                    <h3 class="text-2xl font-bold">
+                        {{ total_stock }}
+                    </h3>
 
                 </div>
 
@@ -358,7 +299,7 @@
 
             <div class="space-y-3">
 
-                <a href="products/"
+                <a href="{% url 'products' %}"
                    class="flex items-center gap-3 bg-zinc-800 hover:bg-zinc-700 p-4 rounded-2xl">
 
                     <i class="fa-solid fa-plus text-emerald-400"></i>
@@ -368,7 +309,7 @@
                 </a>
 
 
-                <a href="addsale/"
+                <a href="{% url 'addsale' %}"
                    class="flex items-center gap-3 bg-zinc-800 hover:bg-zinc-700 p-4 rounded-2xl">
 
                     <i class="fa-solid fa-cart-plus text-blue-400"></i>
@@ -378,7 +319,7 @@
                 </a>
 
 
-                <a href="creditscheme/"
+                <a href="{% url 'creditscheme' %}"
                    class="flex items-center gap-3 bg-zinc-800 hover:bg-zinc-700 p-4 rounded-2xl">
 
                     <i class="fa-solid fa-credit-card text-orange-400"></i>

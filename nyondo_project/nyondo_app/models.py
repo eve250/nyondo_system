@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
 
 # Create your models here.
 
@@ -66,3 +68,18 @@ class CreditScheme(models.Model):
         return self.customer_name
 
 
+class CustomUser(AbstractUser):
+
+    ROLE_CHOICES = (
+        ("overall_manager", "Overall Manager"),
+        ("sales_manager", "Sales Manager"),
+        ("stock_manager", "Stock Manager"),
+        ("cashier", "Cashier"),
+        ("customer_manager", "Customer Manager"),
+    )
+
+    role = models.CharField( max_length=30,choices=ROLE_CHOICES)
+    
+
+    def __str__(self):
+        return self.username

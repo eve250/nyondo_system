@@ -110,12 +110,12 @@
 
                     <td class="p-4 flex gap-2">
 
-                        <a href="#"
+                        <a href="{% url 'edit_product' product.id %}" 
                             class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 px-3 py-1 rounded-xl text-sm">
                             Edit
                         </a>
 
-                        <a href="#" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-3 py-1 rounded-xl text-sm">
+                        <a href="{% url 'delete_product' product.id %}" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-3 py-1 rounded-xl text-sm">
                             Delete
                         </a>
 
