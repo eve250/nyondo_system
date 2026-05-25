@@ -33,6 +33,9 @@ class Sales (models.Model):
   balance = models.DecimalField(max_digits=10 , decimal_places=3)
   receipt =models.CharField(max_length= 100)
   receipt_number = models.IntegerField(unique=True)
+  transport_needed = models.BooleanField(default=False)
+  distance = models.IntegerField(default=0)
+  transport_fee = models.IntegerField(default=0)
   def __str__(self):
     return self.customer
  

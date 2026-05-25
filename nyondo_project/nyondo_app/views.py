@@ -53,8 +53,7 @@ def dashboard(request):
 
     return render(request, "dashboard.html", context)
 
-# VIEW STOCK + ADD PRODUCT
-@login_required
+
 @login_required
 def viewstock(request):
 
@@ -261,10 +260,11 @@ def delete_product(request, pk):
 # ADD SALE
 
 @login_required
+@login_required
 def addsale(request):
+
     if request.user.role not in ["sales_manager" ,"cashier" ,"overall_manager"]:
         return redirect("login")
-
 
     products = Products.objects.all()
     categories = Categories.objects.all()
@@ -273,6 +273,10 @@ def addsale(request):
 
         customer = request.POST.get('customer')
         amount_paid = int(request.POST.get('amount_paid'))
+
+        # TRANSPORT
+        transport_needed = request.POST.get("transport_needed")
+        distance = int(request.POST.get("distance", 0))
 
         product_ids = request.POST.getlist('product_name')
         category_ids = request.POST.getlist('categories')
@@ -300,17 +304,37 @@ def addsale(request):
 
                 grand_total += total
 
+        # TRANSPORT LOGIC
+        transport_fee = 0
+
+        if transport_needed == "True":
+
+            if grand_total >= 500000 and distance <= 10:
+                transport_fee = 0
+
+            else:
+                transport_fee = 30000
+
+        # FINAL TOTAL
+        grand_total += transport_fee
+
         balance = amount_paid - grand_total
 
         # SAVE SALES
         for i in range(len(product_ids)):
 
             if product_ids[i] and quantities[i]:
+
                 product = Products.objects.get(id=product_ids[i])
+
                 category = Categories.objects.get(id=category_ids[i])
+
                 quantity = int(quantities[i])
+
                 unit_price = product.unit_price
+
                 total_amount = quantity * unit_price
+
                 Sales.objects.create(
                     customer=customer,
                     product_name=product,
@@ -321,7 +345,12 @@ def addsale(request):
                     amount_paid=amount_paid,
                     balance=balance,
                     receipt=f"Receipt {receipt_number}",
-                    receipt_number=receipt_number
+                    receipt_number=receipt_number,
+
+                    # TRANSPORT
+                    transport_needed=transport_needed,
+                    distance=distance,
+                    transport_fee=transport_fee
                 )
 
         return redirect('receipt', receipt_number=receipt_number)
@@ -330,8 +359,6 @@ def addsale(request):
         'products': products,
         'categories': categories
     })
-
-
 
 
 # VIEW SALES

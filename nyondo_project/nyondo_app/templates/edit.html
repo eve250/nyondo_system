@@ -13,33 +13,68 @@
         {% csrf_token %}
 
         {% if type == "product" %}
-        <label for="">Product Name</label>
-        <input type="text" name="product_name" value="{{ item.product_name }}"
-            class="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700">
 
-        <label for="">size</label>
-        <input type="text" name="size" value="{{ item.size }}"
-            class="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700">
+        <div>
+            <label class="block mb-2 text-sm text-zinc-300">
+                Product Name
+            </label>
 
-        <label for="">unit price</label>
-        <input type="text" name="unit_price" value="{{ item.unit_price }}"
-            class="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700">
+            <input type="text" name="product_name" value="{{ item.product_name }}"
+                class="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700">
+        </div>
 
-        <label for="">unit cost</label>    
-        <input type="text" name="unit_cost" value="{{ item.unit_cost }}"
-            class="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700">
 
-          <label for="">Quantity</label>    
-        <input type="text" name="quantity" value="{{ item.quantity }}"
-            class="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700">
+        <div>
+            <label class="block mb-2 text-sm text-zinc-300">
+                Size
+            </label>
 
+            <input type="text" name="size" value="{{ item.size }}"
+                class="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700">
+        </div>
+
+
+        <div>
+            <label class="block mb-2 text-sm text-zinc-300">
+                Unit Price
+            </label>
+
+            <input type="text" name="unit_price" value="{{ item.unit_price }}"
+                class="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700">
+        </div>
+
+
+        <div>
+            <label class="block mb-2 text-sm text-zinc-300">
+                Unit Cost
+            </label>
+
+            <input type="text" name="unit_cost" value="{{ item.unit_cost }}"
+                class="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700">
+        </div>
+
+
+        <div>
+            <label class="block mb-2 text-sm text-zinc-300">
+                Quantity
+            </label>
+
+            <input type="text" name="quantity" value="{{ item.quantity }}"
+                class="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700">
+        </div>
 
         {% endif %}
 
         {% if type == "category" %}
 
-        <input type="text" name="name" value="{{ item.name }}"
-            class="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700">
+        <div>
+            <label class="block mb-2 text-sm text-zinc-300">
+                Category Name
+            </label>
+
+            <input type="text" name="name" value="{{ item.name }}"
+                class="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700">
+        </div>
 
         {% endif %}
 
