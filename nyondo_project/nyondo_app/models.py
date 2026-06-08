@@ -75,14 +75,13 @@ class CustomUser(AbstractUser):
 
     ROLE_CHOICES = (
         ("overall_manager", "Overall Manager"),
-        ("sales_manager", "Sales Manager"),
-        ("stock_manager", "Stock Manager"),
-        ("cashier", "Cashier"),
-        ("customer_manager", "Customer Manager"),
+        ("sales_attendant", "Sales Attendant"),
+        ("store_manager", "Store Manager"),
+        ("accounts_manager", "Accounts Manager"),
+        
     )
 
     role = models.CharField( max_length=30,choices=ROLE_CHOICES)
     
-
     def __str__(self):
         return self.username

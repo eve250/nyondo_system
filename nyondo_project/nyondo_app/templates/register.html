@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
@@ -16,11 +17,13 @@
 <body class="bg-zinc-950 min-h-screen flex items-center justify-center px-4 py-10">
 
 
-    <div class="w-full max-w-5xl grid lg:grid-cols-2 bg-zinc-900 rounded-[32px] overflow-hidden border border-zinc-800 shadow-2xl">
+    <div
+        class="w-full max-w-5xl grid lg:grid-cols-2 bg-zinc-900 rounded-[32px] overflow-hidden border border-zinc-800 shadow-2xl">
 
 
         <!-- LEFT SIDE -->
-        <div class="hidden lg:flex flex-col justify-between bg-gradient-to-br from-emerald-500 to-emerald-700 p-10 relative overflow-hidden">
+        <div
+            class="hidden lg:flex flex-col justify-between bg-gradient-to-br from-emerald-500 to-emerald-700 p-10 relative overflow-hidden">
 
             <div>
 
@@ -51,10 +54,9 @@
                     <ul class="space-y-2 text-emerald-50">
 
                         <li>• Overall Manager</li>
-                        <li>• Stock Manager</li>
-                        <li>• Sales Manager</li>
-                        <li>• Cashier</li>
-                        <li>• Customer Manager</li>
+                        <li>• Store Manager</li>
+                        <li>• Sales Attendant</li>
+                        <li>• Accounts Manager</li>
 
                     </ul>
 
@@ -97,7 +99,11 @@
             <form method="POST" class="space-y-5">
 
                 {% csrf_token %}
-
+                {% if form.errors %}
+                <div class="bg-red-500 text-white p-3 rounded mb-4">
+                    {{ form.errors }}
+                </div>
+                {% endif %}
 
                 <!-- USERNAME -->
                 <div>
@@ -106,10 +112,8 @@
                         Username
                     </label>
 
-                    <input type="text"
-                           name="username"
-                           placeholder="Enter username"
-                           class="w-full p-4 rounded-2xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                    <input type="text" name="username" placeholder="Enter username"
+                        class="w-full p-4 rounded-2xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
 
                 </div>
 
@@ -122,10 +126,8 @@
                         Email
                     </label>
 
-                    <input type="email"
-                           name="email"
-                           placeholder="Enter email"
-                           class="w-full p-4 rounded-2xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                    <input type="email" name="email" placeholder="Enter email"
+                        class="w-full p-4 rounded-2xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
 
                 </div>
 
@@ -139,7 +141,7 @@
                     </label>
 
                     <select name="role"
-                            class="w-full p-4 rounded-2xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                        class="w-full p-4 rounded-2xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
 
                         <option value="">
                             Choose Role
@@ -149,20 +151,17 @@
                             Overall Manager
                         </option>
 
-                        <option value="stock_manager">
-                            Stock Manager
+                        <option value="store_manager">
+                            Store Manager
                         </option>
 
-                        <option value="sales_manager">
-                            Sales Manager
+                        <option value="sales_attendant">
+                            Sales Attendant
                         </option>
 
-                        <option value="cashier">
-                            Cashier
-                        </option>
 
-                        <option value="customer_manager">
-                            Customer Manager
+                        <option value="accounts_manager">
+                            Accounts Manager
                         </option>
 
                     </select>
@@ -181,10 +180,8 @@
                             Password
                         </label>
 
-                        <input type="password"
-                               name="password1"
-                               placeholder="Enter password"
-                               class="w-full p-4 rounded-2xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                        <input type="password" name="password1" placeholder="Enter password"
+                            class="w-full p-4 rounded-2xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
 
                     </div>
 
@@ -196,10 +193,8 @@
                             Confirm Password
                         </label>
 
-                        <input type="password"
-                               name="password2"
-                               placeholder="Confirm password"
-                               class="w-full p-4 rounded-2xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                        <input type="password" name="password2" placeholder="Confirm password"
+                            class="w-full p-4 rounded-2xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
 
                     </div>
 
@@ -208,7 +203,8 @@
 
 
                 <!-- BUTTON -->
-                <button class="w-full bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 p-4 rounded-2xl text-white font-bold text-lg shadow-lg shadow-emerald-500/20">
+                <button
+                    class="w-full bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 p-4 rounded-2xl text-white font-bold text-lg shadow-lg shadow-emerald-500/20">
 
                     Create User
 
@@ -230,4 +226,5 @@
     </div>
 
 </body>
+
 </html>

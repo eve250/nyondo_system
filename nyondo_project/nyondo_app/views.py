@@ -7,18 +7,15 @@ from .models import CustomUser
 from django.db.models import Sum
 import random
 
+
 # Create your views here.
-
-@login_required
-
-
+#DASHBOARD
 @login_required
 def dashboard(request):
 
     if request.user.role not in [
         "overall_manager",
-        "sales_manager",
-        "stock_manager"
+        "store_manager"
     ]:
         return redirect("login")
 
@@ -53,11 +50,11 @@ def dashboard(request):
 
     return render(request, "dashboard.html", context)
 
-
+#STOCK
 @login_required
 def viewstock(request):
 
-    if request.user.role not in ["stock_manager", "overall_manager"]:
+    if request.user.role not in ["store_manager", "overall_manager"]:
         return redirect("login")
 
     products = Products.objects.all()
@@ -109,7 +106,7 @@ def viewstock(request):
 ##CATEGORIES
 @login_required
 def categories(request):
-    if request.user.role not in ["stock_manager"  ,"overall_manager"]:
+    if request.user.role not in ["store_manager"  ,"overall_manager"]:
         return redirect("login")
     if request.method == "POST":
 
@@ -136,7 +133,8 @@ def categories(request):
 # EDIT category
 @login_required
 def edit_category(request, pk):
-
+    if request.user.role not in ["store_manager"  ,"overall_manager"]:
+        return redirect("login")
     category = get_object_or_404(Categories, id=pk)
 
     if request.method == "POST":
@@ -158,6 +156,8 @@ def edit_category(request, pk):
 #DELETE CATEGORIES
 @login_required
 def delete_category(request, pk):
+    if request.user.role not in ["overall_manager"]:
+        return redirect("login")
 
     category = get_object_or_404(Categories, id=pk)
 
@@ -177,7 +177,7 @@ def delete_category(request, pk):
 ##PRODUCTS
 @login_required
 def products(request):
-    if request.user.role not in ["stock_manager"  ,"overall_manager"]:
+    if request.user.role not in ["store_manager"  ,"overall_manager"]:
         return redirect("login")
     if request.method == "POST":
 
@@ -217,6 +217,8 @@ def products(request):
 # UPDATE PRODUCT
 @login_required
 def edit_product(request, pk):
+    if request.user.role not in ["store_manager"  ,"overall_manager"]:
+        return redirect("login")
 
     product = get_object_or_404(Products, id=pk)
 
@@ -242,6 +244,8 @@ def edit_product(request, pk):
 ##DELETE PRODUCT 
 @login_required
 def delete_product(request, pk):
+    if request.user.role not in ["overall_manager"]:
+        return redirect("login")
 
     product = get_object_or_404(Products, id=pk)
 
@@ -260,10 +264,9 @@ def delete_product(request, pk):
 # ADD SALE
 
 @login_required
-@login_required
 def addsale(request):
 
-    if request.user.role not in ["sales_manager" ,"cashier" ,"overall_manager"]:
+    if request.user.role not in ["sales_attendant"  ,"overall_manager"]:
         return redirect("login")
 
     products = Products.objects.all()
@@ -277,7 +280,6 @@ def addsale(request):
         # TRANSPORT
         transport_needed = request.POST.get("transport_needed")
         distance = int(request.POST.get("distance", 0))
-
         product_ids = request.POST.getlist('product_name')
         category_ids = request.POST.getlist('categories')
         quantities = request.POST.getlist('quantity')
@@ -335,6 +337,9 @@ def addsale(request):
 
                 total_amount = quantity * unit_price
 
+                product.quantity -= quantity
+                product.save()
+
                 Sales.objects.create(
                     customer=customer,
                     product_name=product,
@@ -364,6 +369,8 @@ def addsale(request):
 # VIEW SALES
 @login_required
 def viewsales(request):
+    if request.user.role not in ["sales_attendant"  ,"overall_manager"]:
+        return redirect("login")
 
     sales = Sales.objects.all().order_by('-id')
 
@@ -391,7 +398,7 @@ def receipt(request, receipt_number):
 ##CREDIT SCHEME
 @login_required
 def creditscheme(request):
-    if request.user.role not in ["customer_manager" ,"cashier" , "overall_manager"] :
+    if request.user.role not in ["accounts_manager"  , "overall_manager"] :
         return redirect("login")
 
     products = Products.objects.all()
@@ -438,7 +445,9 @@ def creditscheme(request):
 
     return render(request, "creditscheme.html", context)
 
-##LOGIN PAGE
+
+
+# LOGIN
 
 def login_view(request):
 
@@ -452,54 +461,55 @@ def login_view(request):
             username=username,
             password=password
         )
-        print("username", username)
-        print("password", password)
-        print("user",user)
-        print(user.role)
+
+        print(user)
+
         if user is not None:
 
             auth_login(request, user)
 
-            # REDIRECT BASED ON ROLE
             if user.role == "overall_manager":
-                return redirect("dashboard")
-
-            elif user.role == "stock_manager":
                 return redirect("viewstock")
 
-            elif user.role == "sales_manager":
-                return redirect("viewsales")
-            
-            elif user.role == "cashier":
-                return redirect("addsale")
+            elif user.role == "store_manager":
+                return redirect("viewstock")
 
-            elif user.role == "customer_manager":
+            elif user.role == "sales_attendant":
+                return redirect("viewsales")
+
+            elif user.role == "accounts_manager":
                 return redirect("creditscheme")
+
+        else:
+            print("Authentication Failed")
 
     return render(request, "login.html")
 
-# REGISTER USER
-
-##REGISTER
+# REGISTER
 @login_required
 def register(request):
-    if request.user.role not in ["overall_manager"] :
+    if request.user.role not in ["overall_manager"]:
         return redirect("login")
-    form = CustomUserForm()
 
     if request.method == "POST":
 
         form = CustomUserForm(request.POST)
 
         if form.is_valid():
+
             form.save()
+
             return redirect("login")
 
-    context = {
-        "form": form
-    }
+        else:
+            print(form.errors)
 
-    return render(request, "register.html", context)
+    else:
+        form = CustomUserForm()
+
+    return render(request, "register.html", {
+        "form": form
+    })
 
 @login_required
 def logoutuser(request):
